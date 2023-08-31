@@ -1,7 +1,7 @@
 service:
   name: newsletter-api
 
-frameworkVersion: "3"
+frameworkVersion: '3'
 
 plugins:
   - serverless-webpack
@@ -13,3 +13,5 @@ provider:
 functions:
   subscribe:
     handler: src/handlers/subscribe.handler
+    timeout: 30
+    memorySize: 1024
