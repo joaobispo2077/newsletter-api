@@ -4,12 +4,17 @@ frameworkVersion: '3'
 
 plugins:
   - serverless-webpack
+  - serverless-iam-roles-per-function
 
 provider:
   name: aws
   runtime: ${self:custom.defaults.lambda.runtime}
   stage: ${self:custom.defaults.stage}
   region: ${self:custom.defaults.region}
+  tracing:
+    lambda: true
+  webpack:
+    webpackConfig: ./webpack.config.js
 
 custom:
   base: ${self:service}-${self:provider.stage}
@@ -24,3 +29,14 @@ functions:
       - http:
           path: /subscribe
           method: GET
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTraceSegments
+          - xray:PutTraceSegment
+          - xray:PutTelemetryRecords
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+        Resource: '*'
