@@ -9,6 +9,7 @@ plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
   - serverless-prune-plugin
+  - serverless-deployment-bucket
 
 provider:
   name: aws
@@ -17,6 +18,9 @@ provider:
   region: ${self:custom.defaults.region}
   tracing:
     lambda: true
+  deploymentBucket:
+    name: ${self:custom.defaults.service}-${self:provider.region}-${aws:accountId}
+    serverSideEncryption: AES256
 
 custom:
   base: ${self:service}-${self:provider.stage}
