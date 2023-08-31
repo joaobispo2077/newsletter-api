@@ -69,3 +69,34 @@ functions:
           - xray:GetSamplingTargets
           - xray:GetSamplingStatisticSummaries
         Resource: '*'
+
+resources:
+  Resources:
+    SubscribeNewsQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        QueueName: ${self:custom.base}-subscribe-news-queue
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+              - DeadLetterSubscribeNews
+              - Arn
+    DeadLetterSubscribeNews:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        QueueName: ${self:custom.base}-dld-subscribe-news-queue
+
+    SubscribeNewsTopic:
+      Type: 'AWS::SNS::Topic'
+      Properties:
+        DisplayName: ${self:custom.base}-subscribe-news-topic
+    NewsQueueSubscriptionToNewsTopic:
+      Type: 'AWS::SNS::Subscription'
+      Properties:
+        Protocol: sqs
+        TopicArn:
+          Ref: SubscribeNewsTopic
+        Endpoint:
+          Fn::GetAtt:
+            - SubscribeNewsQueue
+            - Arn
