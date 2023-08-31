@@ -1,5 +1,4 @@
-service:
-  name: newsletter-api
+service: newsletter-api
 
 frameworkVersion: '3'
 
@@ -8,10 +7,20 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: ${self:custom.defaults.lambda.runtime}
+  stage: ${self:custom.defaults.stage}
+  region: ${self:custom.defaults.region}
+
+custom:
+  base: ${self:service}-${self:provider.stage}
+  defaults: ${file(./defaults/sls.yml):defaults}
 
 functions:
   subscribe:
     handler: src/handlers/subscribe.handler
-    timeout: 30
-    memorySize: 1024
+    timeout: ${self:custom.defaults.lambda.timeout}
+    memorySize: ${self:custom.defaults.lambda.memorySize}
+    events:
+      - http:
+          path: /subscribe
+          method: GET
