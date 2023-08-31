@@ -8,7 +8,7 @@ module.exports = {
     filename: '[name].js',
     path: path.join(__dirname, '.webpack'),
   },
-  mode: 'development',
+  mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   target: 'node',
   module: {
     rules: [
