@@ -27,6 +27,8 @@ custom:
   defaults: ${file(./defaults/sls.yml):defaults}
   webpack:
     webpackConfig: ./webpack.config.js
+    includeModules: true
+    keepOutputDirectory: true
   prune:
     automatic: true
     number: 2
