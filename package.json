@@ -2,7 +2,10 @@
   "name": "newsletter-api",
   "version": "1.0.0",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:coverage": "npm test -- --coverage",
     "style": "prettier --write src/**/*.js",
     "lint": "eslint ./src --ext .js --fix"
   },
