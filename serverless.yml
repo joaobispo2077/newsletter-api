@@ -20,7 +20,7 @@ provider:
   tracing:
     lambda: true
   deploymentBucket:
-    name: ${self:custom.defaults.service}-${self:provider.region}-${aws:accountId}
+    name: ${self:service}-${self:provider.region}-${aws:accountId}
     serverSideEncryption: AES256
 
 custom:
