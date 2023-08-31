@@ -2,9 +2,13 @@ service: newsletter-api
 
 frameworkVersion: '3'
 
+package:
+  individually: true
+
 plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
+  - serverless-prune-plugin
 
 provider:
   name: aws
@@ -13,12 +17,15 @@ provider:
   region: ${self:custom.defaults.region}
   tracing:
     lambda: true
-  webpack:
-    webpackConfig: ./webpack.config.js
 
 custom:
   base: ${self:service}-${self:provider.stage}
   defaults: ${file(./defaults/sls.yml):defaults}
+  webpack:
+    webpackConfig: ./webpack.config.js
+  prune:
+    automatic: true
+    number: 2
 
 functions:
   subscribe:
