@@ -1,0 +1,15 @@
+service:
+  name: newsletter-api
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  subscribe:
+    handler: src/handlers/subscribe.handler
