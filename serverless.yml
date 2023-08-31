@@ -4,6 +4,7 @@ frameworkVersion: '3'
 
 package:
   individually: true
+  excludeDevDependencies: true
 
 plugins:
   - serverless-webpack
