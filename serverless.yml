@@ -7,6 +7,8 @@ package:
   excludeDevDependencies: true
 
 plugins:
+  - serverless-offline
+  - serverless-localstack
   - serverless-webpack
   - serverless-iam-roles-per-function
   - serverless-prune-plugin
@@ -33,6 +35,19 @@ custom:
   prune:
     automatic: true
     number: 2
+  localstack:
+    host: http://localhost
+    debug: true
+    autostart: false
+    stages:
+      - local
+    S3: http://localhost:4572
+    DynamoDB: http://localhost:4570
+    CloudFormation: http://localhost:4581
+    SNS: http://localhost:4575
+    SQS: http://localhost:4576
+    Lambda: http://localhost:4574
+    Kinesis: http://localhost:4568
 
 functions:
   subscribe:
