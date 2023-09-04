@@ -1,7 +1,8 @@
 # package directories
 node_modules
 jspm_packages
-
+aws
+awscliv2.zip
 # Serverless directories
 .serverless
 
