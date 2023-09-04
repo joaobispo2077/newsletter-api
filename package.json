@@ -13,6 +13,10 @@
     "style": "prettier --write src/**/*.js",
     "lint": "eslint ./src --ext .js --fix"
   },
+  "dependencies": {
+    "aws-xray-sdk-core": "3.5.1",
+    "dynamodb-toolbox": "0.8.5"
+  },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "3.398.0",
     "@aws-sdk/lib-dynamodb": "3.398.0",
@@ -37,9 +41,5 @@
     "serverless-prune-plugin": "2.0.2",
     "serverless-webpack": "^5.3.1",
     "webpack": "^4.35.2"
-  },
-  "dependencies": {
-    "aws-xray-sdk-core": "3.5.1",
-    "dynamodb-toolbox": "0.8.5"
   }
 }
