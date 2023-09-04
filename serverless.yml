@@ -83,13 +83,13 @@ resources:
         RedrivePolicy:
           deadLetterTargetArn:
             Fn::GetAtt:
-              - DeadLetterSubscribeNews
-              - Arn
-    DeadLetterSubscribeNews:
+              - 'DeadLetterQueueSubscribeNews'
+              - 'Arn'
+          maxReceiveCount: 3
+    DeadLetterQueueSubscribeNews:
       Type: 'AWS::SQS::Queue'
       Properties:
         QueueName: ${self:custom.base}-dld-subscribe-news-queue
-
     SubscribeNewsTopic:
       Type: 'AWS::SNS::Topic'
       Properties:
@@ -99,8 +99,8 @@ resources:
       Properties:
         Protocol: sqs
         TopicArn:
-          Ref: SubscribeNewsTopic
+          Ref: 'SubscribeNewsTopic'
         Endpoint:
           Fn::GetAtt:
-            - SubscribeNewsQueue
-            - Arn
+            - 'SubscribeNewsQueue'
+            - 'Arn'
