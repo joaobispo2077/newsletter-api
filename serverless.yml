@@ -48,6 +48,8 @@ custom:
     SQS: http://localhost:4576
     Lambda: http://localhost:4574
     Kinesis: http://localhost:4568
+    IAM: http://localhost:4566
+    STS: http://localhost:4566
 
 functions:
   subscribe:
