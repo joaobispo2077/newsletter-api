@@ -55,9 +55,13 @@ functions:
     timeout: ${self:custom.defaults.lambda.timeout}
     memorySize: ${self:custom.defaults.lambda.memorySize}
     events:
-      - http:
-          path: /subscribe
-          method: GET
+      - sqs:
+          batchSize: 5
+          maximumBatchingWindow: 60
+          arn:
+            Fn::GetAtt:
+              - SubscribeNewsQueue
+              - Arn
     iamRoleStatements:
       - Effect: Allow
         Action:
