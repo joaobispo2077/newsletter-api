@@ -70,6 +70,7 @@ functions:
       - sqs:
           batchSize: 5
           maximumBatchingWindow: 60
+          functionResponseType: ReportBatchItemFailures
           arn:
             Fn::GetAtt:
               - SubscribeNewsQueue
@@ -85,6 +86,114 @@ functions:
           - xray:GetSamplingTargets
           - xray:GetSamplingStatisticSummaries
         Resource: '*'
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource:
+          Fn::GetAtt:
+            - NewsLetterTable
+            - Arn
+  subscription-failed:
+    handler: src/handlers/subscription-failed.handler
+    timeout: ${self:custom.defaults.lambda.timeout}
+    memorySize: ${self:custom.defaults.lambda.memorySize}
+    environment:
+      NEWSLETTER_TABLE_NAME: ${self:custom.tables.newsLetterTable}
+    events:
+      - sqs:
+          batchSize: 5
+          maximumBatchingWindow: 60
+          functionResponseType: ReportBatchItemFailures
+          arn:
+            Fn::GetAtt:
+              - DeadLetterQueueSubscribeNews
+              - Arn
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTraceSegments
+          - xray:PutTraceSegment
+          - xray:PutTelemetryRecords
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+        Resource: '*'
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource:
+          Fn::GetAtt:
+            - NewsLetterTable
+            - Arn
+  unsubscribe:
+    handler: src/handlers/unsubscribe.handler
+    timeout: ${self:custom.defaults.lambda.timeout}
+    memorySize: ${self:custom.defaults.lambda.memorySize}
+    environment:
+      NEWSLETTER_TABLE_NAME: ${self:custom.tables.newsLetterTable}
+    events:
+      - sqs:
+          batchSize: 5
+          maximumBatchingWindow: 60
+          functionResponseType: ReportBatchItemFailures
+          arn:
+            Fn::GetAtt:
+              - UnsubscribeNewsQueue
+              - Arn
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTraceSegments
+          - xray:PutTraceSegment
+          - xray:PutTelemetryRecords
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+        Resource: '*'
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+        Resource:
+          Fn::GetAtt:
+            - NewsLetterTable
+            - Arn
+  unsubscription-failed:
+    handler: src/handlers/unsubscription-failed.handler
+    timeout: ${self:custom.defaults.lambda.timeout}
+    memorySize: ${self:custom.defaults.lambda.memorySize}
+    environment:
+      NEWSLETTER_TABLE_NAME: ${self:custom.tables.newsLetterTable}
+    events:
+      - sqs:
+          batchSize: 5
+          maximumBatchingWindow: 60
+          functionResponseType: ReportBatchItemFailures
+          arn:
+            Fn::GetAtt:
+              - DeadLetterQueueUnsubscribeNews
+              - Arn
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTraceSegments
+          - xray:PutTraceSegment
+          - xray:PutTelemetryRecords
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+        Resource: '*'
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource:
+          Fn::GetAtt:
+            - NewsLetterTable
+            - Arn
 
 resources:
   Resources:
