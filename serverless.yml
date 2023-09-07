@@ -136,3 +136,34 @@ resources:
           Fn::GetAtt:
             - 'SubscribeNewsQueue'
             - 'Arn'
+    UnsubscribeNewsQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        QueueName: ${self:custom.base}-unsubscribe-news-queue
+        MessageRetentionPeriod: 3600 # 1 hours in seconds
+        VisibilityTimeout: 30
+        ReceiveMessageWaitTimeSeconds: 20
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+              - 'DeadLetterQueueUnsubscribeNews'
+              - 'Arn'
+          maxReceiveCount: 3
+    DeadLetterQueueUnsubscribeNews:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        QueueName: ${self:custom.base}-dld-unsubscribe-news-queue
+    UnsubscribeNewsTopic:
+      Type: 'AWS::SNS::Topic'
+      Properties:
+        DisplayName: ${self:custom.base}-unsubscribe-news-topic
+    NewsQueueUnsubscriptionToNewsTopic:
+      Type: 'AWS::SNS::Subscription'
+      Properties:
+        Protocol: sqs
+        TopicArn:
+          Ref: 'UnsubscribeNewsTopic'
+        Endpoint:
+          Fn::GetAtt:
+            - 'UnsubscribeNewsQueue'
+            - 'Arn'
