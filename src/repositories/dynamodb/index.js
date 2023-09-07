@@ -1,6 +1,7 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 import AWSXRay from 'aws-xray-sdk-core';
+import { getDynamoDbEndpoint } from '../../helpers/getEndpoints';
 
 const marshallOptions = {
   convertEmptyValues: false,
@@ -14,7 +15,11 @@ const unmarshallOptions = {
 
 const translateConfig = { marshallOptions, unmarshallOptions };
 
-const dynamoDbClient = AWSXRay.captureAWSv3Client(new DynamoDBClient({}));
+const dynamoDbClient = AWSXRay.captureAWSv3Client(
+  new DynamoDBClient({
+    endpoint: getDynamoDbEndpoint(),
+  }),
+);
 
 export const DocumentClient = DynamoDBDocumentClient.from(
   dynamoDbClient,
