@@ -44,7 +44,7 @@ The project is based on the following technologies:
 
 - [🚀 Node.js](https://nodejs.org/en/) — A JavaScript runtime built on Chrome's V8 JavaScript engine.
 - [✨ Serverless Framework](https://www.serverless.com) — A framework to build serverless applications.
-- [💻 Localstack](http://)
+- [💻 Localstack](https://docs.localstack.cloud/getting-started/installation/) — Run AWS services locally.
 - [🐋 Docker](https://www.docker.com) — A set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.
 - [📦 AWS SDK](https://aws.amazon.com/sdk-for-node-js/) — The official AWS SDK for JavaScript, available for browsers and mobile devices, or Node.js backends.
 - [📦 ESLint](https://eslint.org) — A fully pluggable tool for identifying and reporting on patterns in JavaScript.
