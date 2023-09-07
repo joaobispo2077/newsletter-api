@@ -31,6 +31,8 @@ provider:
 custom:
   base: ${self:service}-${self:provider.stage}
   defaults: ${file(./defaults/sls.yml):defaults}
+  tables:
+    newsLetterTable: ${self:custom.base}-news-letter-table
   webpack:
     webpackConfig: ./webpack.config.js
     keepOutputDirectory: true
@@ -62,6 +64,8 @@ functions:
     handler: src/handlers/subscribe.handler
     timeout: ${self:custom.defaults.lambda.timeout}
     memorySize: ${self:custom.defaults.lambda.memorySize}
+    environment:
+      NEWSLETTER_TABLE_NAME: ${self:custom.tables.newsLetterTable}
     events:
       - sqs:
           batchSize: 5
@@ -84,6 +88,23 @@ functions:
 
 resources:
   Resources:
+    NewsLetterTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: ${self:custom.tables.newsLetterTable}
+        KeySchema:
+          - AttributeName: 'pk'
+            KeyType: 'HASH'
+          - AttributeName: 'sk'
+            KeyType: 'RANGE'
+        AttributeDefinitions:
+          - AttributeName: 'pk'
+            AttributeType: 'S'
+          - AttributeName: 'sk'
+            AttributeType: 'S'
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
     SubscribeNewsQueue:
       Type: 'AWS::SQS::Queue'
       Properties:
