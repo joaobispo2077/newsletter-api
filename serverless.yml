@@ -112,7 +112,6 @@ resources:
         MessageRetentionPeriod: 3600 # 1 hours in seconds
         VisibilityTimeout: 30
         ReceiveMessageWaitTimeSeconds: 20
-        ContentBasedDeduplication: false
         RedrivePolicy:
           deadLetterTargetArn:
             Fn::GetAtt:
