@@ -5,7 +5,7 @@ subscription service
 </h1>
 
 <div align="center">
-  <img  alt="The Office Jim Halpert staring at you" title="#the-office-jim-halpert" src=".github/assets/subscription-service.png" width="800px" />
+  <img  alt="Subscription service diagram with all services connected" title="#the-office-jim-halpert" src=".github/assets/subscription-service.png" width="800px" />
 </div>
 
 <p align="center">
