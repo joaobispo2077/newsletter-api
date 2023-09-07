@@ -24,6 +24,9 @@ provider:
   deploymentBucket:
     name: ${self:service}-${self:provider.region}-${aws:accountId}
     serverSideEncryption: AES256
+  environment:
+    LOCALSTACK_ENDPOINT: http://172.31.153.196:4566
+    STAGE: ${self:custom.defaults.stage}
 
 custom:
   base: ${self:service}-${self:provider.stage}
