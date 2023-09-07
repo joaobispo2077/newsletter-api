@@ -1,4 +1,4 @@
-service: newsletter-api
+service: newsletter-service
 
 frameworkVersion: '3'
 
@@ -30,8 +30,11 @@ custom:
   defaults: ${file(./defaults/sls.yml):defaults}
   webpack:
     webpackConfig: ./webpack.config.js
-    includeModules: true
     keepOutputDirectory: true
+    includeModules:
+      forceExclude:
+        - '@aws-sdk/client-dynamodb'
+        - '@aws-sdk/lib-dynamodb'
   prune:
     automatic: true
     number: 2
