@@ -1,4 +1,4 @@
-# Batch Item Failures Try Catch Example
+# Handle Batch Item Failures Try Catch Example
 
 ```javascript
 import { readerService } from '../services/reader-service';
@@ -37,7 +37,7 @@ export const handler = async (event, _context, _callback) => {
 };
 ```
 
-# Batch Item Failures Promise.allSettled Example
+# Handle Batch Item Failures Promise.allSettled Example
 
 ```javascript
 import { readerService } from '../services/reader-service';
