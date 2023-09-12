@@ -16,7 +16,7 @@ export const handler = async (event, _context, _callback) => {
       const { name, email, letter } = JSON.parse(Message);
 
       try {
-        // this line you can replace with your own logic
+        // this block you can replace with your own logic
         await readerService.subscribeReader({ name, email, letter });
       } catch (error) {
         console.error(`[${index}] Message rejected by reason: ${error}`);
@@ -51,7 +51,7 @@ export const handler = async (event, _context, _callback) => {
         const { Message } = JSON.parse(body);
         const { name, email, letter } = JSON.parse(Message);
 
-        // this line you can replace with your own logic
+        // this block you can replace with your own logic
         return await readerService.subscribeReader({ name, email, letter });
       }),
     );
